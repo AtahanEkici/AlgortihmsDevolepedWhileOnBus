@@ -15,6 +15,7 @@ typedef struct LinkedList
 bool IsSpecialNumber(lint a);
 lint ustu(long int a , long int b);
 bool IsDevisableTo(int a , int b);
+void Pascal(lint a);
 lint faktoriyel(long int a);
 lint logarithm(long int a , long int b);
 bool Isprime(long int a);
@@ -34,6 +35,7 @@ lint triple(lint a);
 bool IsAmicableNumber(lint a , lint b);
 void ArithmeticNumber(lint a , lint b , lint c);
 void GeometricNumber(lint a , lint b , lint c);
+lint Combination(lint a , lint b);
 
 
 int main(void)
@@ -48,8 +50,8 @@ int main(void)
     printf("\n%ld\n" , logarithm(4,16));
     
     puts("Fibonacci");
-    fibonacci(25);
-    puts("Fibonacci");
+    fibonacci(30);
+    puts("\nFibonacci");
     
    printf( "\n\n%ld\n" , findmax(120 , 1121));
     
@@ -97,14 +99,58 @@ int main(void)
     
     printf("\n");
     
+    puts("\n\nArithmetic");
+    
     ArithmeticNumber(5 , 3 , 20);
     
     puts("\nGeometric");
     
     GeometricNumber(3 , 7 , 10);
     
+    puts("\n ------ PASCAL ------ \n");
+    
+    Pascal(7);
 }
 
+void Pascal(lint a)
+{
+    lint counter = a;
+    
+    if(a == 1 )
+    {
+        puts("\n1");
+    }
+    
+    else if(a == 2)
+    {
+        puts("1\n1");
+    }
+    
+    else if(a == 3)
+    {
+        puts("1\n2\n1");
+    }
+    
+    else
+    {
+       while(counter >= 0)
+    {
+printf(" %ld",Combination(a,counter));
+    counter--;
+    }
+   }
+}
+
+lint Combination(lint a , lint b)
+{
+    lint temp = a - b;
+    
+    lint temp2 = faktoriyel(b) * faktoriyel(temp);
+    
+    lint result = faktoriyel(a) / temp2 ;
+    
+    return result;
+}
 
 void GeometricNumber(lint a , lint b , lint c)
 {
@@ -269,7 +315,6 @@ void divisor(long int a)
             counter++;
         }
     }
-  
     iter = root;
     
     while(iter -> next != NULL)
@@ -278,7 +323,6 @@ void divisor(long int a)
         iter = iter -> next;
     }
 }
-
 
 bool IsSmithNumber(long int a)
 {
@@ -294,7 +338,6 @@ bool IsSmithNumber(long int a)
         {
             sum1 = counter + sum1;
             result1 = result1 / counter;
-            
         }
         
         else
@@ -343,7 +386,6 @@ bool Isprime(long int a)
             counter++;
         }
     }
-    
     return 1;
 }
 
@@ -360,7 +402,6 @@ void triangularnumbers(long int a)
         printf("\n %ld " , fct / 2);
         ctr++;
     }
-    
     printf("\n");
 }
 
@@ -438,7 +479,6 @@ if(max % counter == 0 && min % counter == 0)
            counter++;
         }
     }
-
     return result;
 }
 
@@ -469,10 +509,10 @@ long int findmax(long int a , long int b)
 }
 void fibonacci(long int a)
 {
-   long int before;
-   long int after;
-   long int aft; // place holder //
-   long int counter = 0;
+   lint before;
+   lint after;
+   lint aft; // temp //
+   lint counter = 0;
     
     before = 0;
     after = 1;
@@ -480,7 +520,7 @@ void fibonacci(long int a)
     
     while(counter <= a)
     {
-        printf("\n%ld" , after);
+        printf("\n%ld)%ld" ,counter, before);
         after = before + after;
         before = aft;
         aft = after;
@@ -537,12 +577,11 @@ long int logarithm(long int a , long int b)
     }
 }
 
-
-long int faktoriyel(long int a)
+lint faktoriyel(long int a)
 {
    if(a < 0)
     {
-        return -1;
+        return (faktoriyel(a) * -1);
     }
     
     else if(a == 0 || a == 1)
@@ -560,7 +599,6 @@ long int faktoriyel(long int a)
  long int ustu(long int a , long int b)
 {
      long int ust = a;
-    
      long int counter = b;
     
     if(a == 0 || b == 0)
