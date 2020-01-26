@@ -29,9 +29,8 @@ void swap(node *a , node *b);
 bool IsEven(uint a);
 void Sum(node *a);
 void yinangsort(node *a , uint b);
-
-
-
+void selectionsort(node *a);
+bool IsSorted(node *a);
 
 int main()
 {
@@ -40,34 +39,41 @@ int main()
     
     node * root;
     node * root2;
+    node * root3;
     
     root = (node*)malloc(sizeof(node));
     root2 = (node*)malloc(sizeof(node));
+    root3 = (node*)malloc(sizeof(node));
     
     node * iter = root;
     node * iter2 = root2;
+    node * iter3 = root3;
     
      uint counter = 1;
     
-    while(counter < rand() %1000)
+    while(counter <= rand() %1000)
     {
 iter -> next =(node*)malloc(sizeof(node));
 iter2 -> next =(node*)malloc(sizeof(node));
+iter3 -> next =(node*)malloc(sizeof(node));
         
         iter -> data = rand() %1000;
         iter2 -> data = rand() %1000;
+        iter3 -> data = rand() %1000;
         
         iter = iter -> next;
         iter2 = iter2 -> next;
+        iter3 = iter3 -> next;
         
         counter++;
     }
-   
+   /*
     addtoposition(root , 5 , 1111);
     addtofirst(root , 1111);
     addtolast(root , 1111);
     deleteatposition(root , 3);
     search(root , 1111);
+    */
     
     display(root);
     puts(" \n AFTER SHELLSORT \n ");
@@ -81,8 +87,99 @@ iter2 -> next =(node*)malloc(sizeof(node));
     bubblesort(root2 , counter);
     display(root2);
     
+    puts(" \n ------------- \n ");
+    
+    display(root3);
+    puts("\n After Selectionsort \n");
+    selectionsort(root3);
+    display(root3);
+    
     Sum(root);
     Sum(root2);
+    Sum(root3);
+    
+    IsSorted(root);
+    IsSorted(root2);
+    IsSorted(root3);
+    
+}
+
+bool IsSorted(node *a)
+{
+    node *iter = (node*)malloc(sizeof(node));
+    
+    node *sonra = (node*)malloc(sizeof(node));
+    
+    iter = a;
+    sonra = a;
+    sonra = sonra -> next;
+    
+    while(sonra -> next != NULL)
+    {
+        if(iter -> data > sonra -> data)
+        {
+            printf("\nNot Sorted iter:%d sonra:%d",iter->data,sonra->data);
+            return 0;
+        }
+        
+        else
+        {
+            sonra = sonra -> next;
+            iter = iter -> next;
+        }
+    }
+    puts("\nSorted");
+    return 1;
+}
+
+
+void selectionsort(node *a)
+{
+    taym simdi = clock();
+    
+    double time_spent;
+    
+    node *iter;
+    iter = (node*)malloc(sizeof(node));
+    
+    node *min;
+    min = (node*)malloc(sizeof(node));
+    
+    iter = a;
+    
+    while(a -> next != NULL)
+    {
+        if(iter -> next == NULL)
+        {
+            swap(a,min);
+            a = a -> next;
+            iter = a;
+        }
+        
+       else if(iter -> data < min -> data)
+        {
+            swap(min,iter);
+            iter = iter -> next;
+        }
+        
+       else
+        {
+            if(iter -> next == NULL)
+            {
+                break;
+            }
+            else
+            {
+                
+            iter = iter -> next;
+            }
+        }
+            }
+    taym sonra = clock();
+    
+    time_spent = (double) (sonra - simdi) / CLOCKS_PER_SEC;
+    
+    printf("\n It took %f seconds \n\n" , time_spent);
 }
 
 void Sum(node *a)
@@ -153,6 +250,7 @@ void swap(struct LINKED_LIST  *a , struct LINKED_LIST *b)
 {
     struct LINKED_LIST *c;
     struct LINKED_LIST *d;
+    
     c = (node*)malloc(sizeof(node));
     d = (node*)malloc(sizeof(node));
     
@@ -161,7 +259,6 @@ void swap(struct LINKED_LIST  *a , struct LINKED_LIST *b)
     
     a -> data = d -> data;
     b -> data = c -> data;
-    
 }
 void addtoposition(node *n , unsigned int a , int data)
 {
@@ -171,10 +268,8 @@ void addtoposition(node *n , unsigned int a , int data)
     
  while(complete == false)
     {
-      
         if(ctr == a)
         {
-            
             temp -> next = n -> next;
             n -> next = temp;
             temp -> data = data;
@@ -191,7 +286,6 @@ void addtoposition(node *n , unsigned int a , int data)
 
 void deleteatposition(node *n , unsigned int a)
 {
-        
  unsigned int ctr = 1;
  bool complete = false;
         
@@ -199,7 +293,6 @@ void deleteatposition(node *n , unsigned int a)
         {
             if(ctr == a)
             {
-            
            n -> data = 0;
             printf("\n %d. değer başarıyla silindi\n" , a);
            n -> next = n -> next -> next;
@@ -225,7 +318,6 @@ while (atlast == false)
         {
             n -> next = (node*)malloc(sizeof(node));
             n -> next = r;
-            
         }
         
         else
@@ -247,11 +339,9 @@ void search(node *a , int b )
         {
             c++;
             iter = iter -> next;
-            
         }
         
         else
-        
         {
             iter = iter -> next;
         }
@@ -267,8 +357,6 @@ void search(node *a , int b )
     {
     printf("\nThe value %d have been found %d times in this list\n" , b , c);
 }
-    
-    
 }
 
 bool IsEven(uint a)
@@ -282,15 +370,12 @@ bool IsEven(uint a)
     {
         return true;
     }
-    
 }
     
 
 void bubblesort(node *a , uint b )
   {
-    
     taym simdi = clock();
-    
     double time_spent;
     
        node *prev;
@@ -332,9 +417,7 @@ void bubblesort(node *a , uint b )
     time_spent = (double) (sonra - simdi) / CLOCKS_PER_SEC;
     
     printf("\n It took %f seconds \n\n" , time_spent);
-    
   }
-
 /*
 void quicksort(node *a , uint b)
     {
@@ -353,8 +436,6 @@ void quicksort(node *a , uint b)
     
     uint ctr1;
     uint ctr2;
-    
-    
     
     pivot = a;
     
@@ -381,9 +462,6 @@ void quicksort(node *a , uint b)
     biter = a;
     siter = pivot;
     
-   
-  
-
     taym sonra = clock();
     time_spent = (float)(sonra - once) / CLOCKS_PER_SEC;
     printf("\n %f seconds \n" , time_spent);
@@ -407,7 +485,6 @@ void shellsort(node *a , uint b , uint c)
     
     while(current != NULL)
     {
-        
         if(b == 1)
         {
             bubblesort(a , c);
@@ -447,8 +524,6 @@ void shellsort(node *a , uint b , uint c)
     taym sonra = clock();
     time_spent = (float)(sonra - once) / CLOCKS_PER_SEC;
     printf("\n %f seconds \n" , time_spent);
-    
-
 }
 
 /*
